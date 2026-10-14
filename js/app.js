@@ -180,44 +180,54 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function setupNavigationTabs() {
-    const navLinks = document.querySelectorAll('.nav-anchor-link');
-    const sections = document.querySelectorAll('.content-section-block');
+    const navLinks = document.querySelectorAll('[data-nav]');
+    const pages = document.querySelectorAll('.app-page');
+
+    function navigateToPage(pageKey) {
+      const targetPage = document.getElementById(`page-${pageKey}`);
+      if (!targetPage) return;
+
+      pages.forEach(p => p.classList.remove('active'));
+      targetPage.classList.add('active');
+
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-nav') === pageKey) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      history.replaceState(null, '', `#${pageKey}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // If switching to comparison page, auto-run benchmark if empty
+      if (pageKey === 'benchmark-comparison' && comparison && (!comparison.tableBody.hasChildNodes() || comparison.tableBody.children.length === 0)) {
+        comparison.runAllBenchmarks();
+      }
+    }
 
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        const targetId = link.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
-
-        if (targetSection) {
-          navLinks.forEach(l => l.classList.remove('active'));
-          link.classList.add('active');
-          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        const pageKey = link.getAttribute('data-nav');
+        if (window.soundEngine) window.soundEngine.playClick();
+        navigateToPage(pageKey);
       });
     });
 
-    // Update active nav link on scroll
-    window.addEventListener('scroll', () => {
-      let currentSectionId = '';
-      const scrollPos = window.scrollY + 120;
+    // Check initial hash on load or default to home
+    const initialHash = window.location.hash.replace('#', '');
+    if (initialHash && document.getElementById(`page-${initialHash}`)) {
+      navigateToPage(initialHash);
+    } else {
+      navigateToPage('home');
+    }
 
-      sections.forEach(sec => {
-        const top = sec.offsetTop;
-        const height = sec.offsetHeight;
-        if (scrollPos >= top && scrollPos < top + height) {
-          currentSectionId = '#' + sec.id;
-        }
-      });
-
-      if (currentSectionId) {
-        navLinks.forEach(link => {
-          if (link.getAttribute('href') === currentSectionId) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        });
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && document.getElementById(`page-${hash}`)) {
+        navigateToPage(hash);
       }
     });
   }

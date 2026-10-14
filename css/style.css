@@ -1409,3 +1409,420 @@ body {
   color: var(--text-secondary);
   font-size: 13px;
 }
+
+/* ==========================================================================
+   Page Switching & View Routing
+   ========================================================================== */
+
+.app-page {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-page.active {
+  display: block;
+  opacity: 1;
+}
+
+/* ==========================================================================
+   PAGE 1: Dedicated Home Page Styles
+   ========================================================================== */
+
+.home-hero-container {
+  max-width: 1360px;
+  margin: 28px auto 60px;
+  padding: 0 24px;
+}
+
+.home-academic-card {
+  background: linear-gradient(135deg, rgba(23, 35, 63, 0.85) 0%, rgba(11, 17, 32, 0.95) 100%);
+  border: 1px solid var(--glass-border);
+  border-top: 5px solid var(--indigo-500);
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(99, 102, 241, 0.12);
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-academic-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.home-meta-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  font-size: 13.5px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.course-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cyan-400);
+  font-size: 14px;
+}
+
+.course-badge .badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cyan-400);
+  box-shadow: 0 0 10px var(--cyan-400);
+}
+
+.assignment-meta-tag {
+  color: var(--text-muted);
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.home-assignment-title {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.6px;
+  line-height: 1.25;
+  margin-bottom: 24px;
+  max-width: 860px;
+}
+
+.student-credentials-banner {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: rgba(7, 10, 18, 0.65);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 16px 24px;
+  align-items: center;
+}
+
+.cred-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 160px;
+}
+
+.cred-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.cred-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.cred-value.cred-reg {
+  font-family: var(--font-mono);
+  color: var(--cyan-400);
+}
+
+.cred-item.assigned-item {
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .cred-item.assigned-item {
+    margin-left: 0;
+  }
+}
+
+/* Introduction to 8-Puzzle Card Layout */
+.home-intro-card {
+  margin-bottom: 32px;
+}
+
+.intro-grid-layout {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .intro-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.intro-paragraph.lead {
+  font-size: 15px;
+  color: #ffffff;
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+
+.intro-key-points {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.key-point-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: rgba(11, 17, 32, 0.65);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.key-point-item strong {
+  color: #ffffff;
+}
+
+.kp-icon {
+  color: var(--indigo-400);
+  font-size: 14px;
+  margin-top: 1px;
+}
+
+.formula-chip {
+  margin-top: 8px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 6px 12px;
+  border-radius: var(--radius-xs);
+  display: inline-block;
+}
+
+.formula-chip code {
+  color: #a5b4fc;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* Puzzle Preview Card on Home Page */
+.puzzle-preview-card {
+  background: rgba(11, 17, 32, 0.85);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+.preview-card-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--cyan-400);
+  letter-spacing: 0.6px;
+  margin-bottom: 18px;
+}
+
+.preview-boards-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.mini-board-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mini-board-lbl {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.mini-3x3-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 30px);
+  gap: 4px;
+  background: #090d16;
+  border: 2px solid #1e293b;
+  border-radius: var(--radius-sm);
+  padding: 4px;
+}
+
+.mini-3x3-grid div {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mini-board-preview.goal-target .mini-3x3-grid div:not(.blank-slot) {
+  border-color: var(--emerald-500);
+  color: var(--emerald-400);
+}
+
+.mini-3x3-grid div.blank-slot {
+  background: transparent;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  color: transparent;
+}
+
+.flow-arrow {
+  font-size: 22px;
+  color: var(--indigo-400);
+}
+
+.preview-caption {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Navigation Portal Cards Grid (Requirement 1: Navigation Menu) */
+.home-nav-portal-section {
+  margin-top: 36px;
+}
+
+.portal-section-header {
+  margin-bottom: 20px;
+}
+
+.portal-section-header h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.portal-section-header p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.home-portal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.portal-card {
+  background: var(--glass-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.portal-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-lg), 0 0 24px rgba(99, 102, 241, 0.25);
+  background: rgba(23, 35, 63, 0.9);
+}
+
+.portal-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.portal-card-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.portal-card-icon.indigo {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--indigo-400);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+}
+
+.portal-card-icon.cyan {
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--cyan-400);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+}
+
+.portal-card-icon.emerald {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--emerald-400);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.portal-card-icon.purple {
+  background: rgba(139, 92, 246, 0.15);
+  color: #c084fc;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+}
+
+.portal-card-content h3 {
+  font-family: var(--font-display);
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.portal-card-content p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.portal-link-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cyan-400);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s ease;
+}
+
+.portal-card:hover .portal-link-text {
+  transform: translateX(4px);
+  color: #ffffff;
+}

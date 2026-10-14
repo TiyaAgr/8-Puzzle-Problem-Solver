@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Modern Interactive 8-Puzzle Problem Solver using AI Search Algorithms. Assignment for Course Artificial Intelligence by Tiya Agrawal (24BDS0004). Allotted Algorithm: Breadth First Search (BFS).">
-  <title>AI 8-Puzzle Solver & Visualizer | Tiya Agrawal (24BDS0004)</title>
+  <meta name="description" content="Interactive 8-Puzzle Problem Solver using AI Search Algorithms. Individual Assignment for Course Artificial Intelligence by Tiya Agrawal (Reg No: 24BDS0004). Allotted Algorithm: Breadth First Search (BFS).">
+  <title>Interactive 8-Puzzle Solver | Tiya Agrawal (24BDS0004)</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <!-- ====================================================================
-       Modern Sticky Navbar
+       Top Navigation Bar (Requirement 1: Navigation Menu)
        ==================================================================== -->
   <header class="top-navbar-wrapper">
     <div class="top-navbar">
       
       <!-- Brand & Course Logo -->
-      <a href="#solver" class="brand-identity-cluster">
+      <a href="#home" class="brand-identity-cluster" data-nav="home">
         <div class="brand-logo-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="3" width="7" height="7"></rect>
@@ -26,20 +26,31 @@
           </svg>
         </div>
         <div class="brand-meta">
-          <h1>AI 8-Puzzle Visualizer</h1>
-          <span>Artificial Intelligence &bull; Digital Assignment</span>
+          <h1>8-Puzzle AI Solver</h1>
+          <span>Artificial Intelligence Case Study</span>
         </div>
       </a>
 
-      <!-- Quick Section Anchor Links -->
-      <nav class="nav-pills-menu" aria-label="Page Sections Navigation">
-        <a href="#solver" class="nav-pill-link active">Solver Arena</a>
-        <a href="#search-inspection" class="nav-pill-link">Live Telemetry</a>
-        <a href="#benchmark-comparison" class="nav-pill-link">Benchmark</a>
-        <a href="#theoretical-foundations" class="nav-pill-link">Theory</a>
+      <!-- Navigation Menu (Requirement 1) -->
+      <nav class="nav-pills-menu" id="primary-nav-menu" aria-label="Main Navigation Menu">
+        <a href="#home" class="nav-pill-link active" data-nav="home">
+          <span class="nav-icon">&home;</span> Home
+        </a>
+        <a href="#solver" class="nav-pill-link" data-nav="solver">
+          <span class="nav-icon">&#9658;</span> Puzzle Solver
+        </a>
+        <a href="#search-inspection" class="nav-pill-link" data-nav="search-inspection">
+          <span class="nav-icon">&equiv;</span> Search Telemetry
+        </a>
+        <a href="#benchmark-comparison" class="nav-pill-link" data-nav="benchmark-comparison">
+          <span class="nav-icon">&#128202;</span> Comparison Page
+        </a>
+        <a href="#theoretical-foundations" class="nav-pill-link" data-nav="theoretical-foundations">
+          <span class="nav-icon">&#128214;</span> Algorithm Info
+        </a>
       </nav>
 
-      <!-- Student Badge & Controls Action Group -->
+      <!-- Student Badge & Sound Toggle -->
       <div class="nav-actions-group">
         <div class="student-tag-pill">
           <div class="student-avatar">TA</div>
@@ -49,7 +60,6 @@
           </div>
         </div>
 
-        <!-- Synthesized Audio Sound Toggle Button -->
         <button type="button" class="icon-btn-toggle" id="btn-sound-toggle" title="Toggle Sound Effects">
           <svg id="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -62,62 +72,220 @@
   </header>
 
   <!-- ====================================================================
-       Hero Showcase Section
+       PAGE 1: Dedicated Home Page (Requirement 1)
        ==================================================================== -->
-  <section class="hero-showcase">
-    <div class="hero-banner-glass">
-      <div class="hero-text-content">
-        <div class="hero-badge-strip">
-          <span class="pill-badge course">Course: Artificial Intelligence</span>
-          <span class="pill-badge assigned">&starf; Allotted: Algorithm #1 — Breadth First Search (BFS)</span>
+  <div id="page-home" class="app-page active">
+    <div class="home-hero-container">
+      
+      <!-- Primary Academic Title & Metadata Showcase -->
+      <section class="home-academic-card">
+        <div class="home-meta-topline">
+          <div class="course-badge">
+            <span class="badge-dot"></span>
+            <strong>Course Name:</strong> Artificial Intelligence
+          </div>
+          <div class="assignment-meta-tag">
+            Digital Assignment (Case Study) &bull; VIT Bhopal University
+          </div>
         </div>
-        <h2 class="hero-title">
-          Interactive 8-Puzzle <span class="grad-text">State-Space Solver</span>
-        </h2>
-        <p class="hero-subtitle">
-          An interactive laboratory demonstrating classical uninformed and informed search algorithms in action. Watch real-time blank tile sliding physics, inspect search tree expansions, and benchmark performance metrics.
-        </p>
-      </div>
 
-      <!-- Quick Metrics HUD -->
-      <div class="hero-stats-panel">
-        <div class="hero-stat-item">
-          <div class="hero-stat-val">362,880</div>
-          <div class="hero-stat-lbl">Total Permutations</div>
+        <h1 class="home-assignment-title">
+          Interactive 8-Puzzle Problem Solver using AI Search Algorithms
+        </h1>
+
+        <!-- Student & Allotment Credentials Card -->
+        <div class="student-credentials-banner">
+          <div class="cred-item">
+            <span class="cred-label">Student Name:</span>
+            <span class="cred-value">Tiya Agrawal</span>
+          </div>
+          <div class="cred-item">
+            <span class="cred-label">Registration Number:</span>
+            <span class="cred-value cred-reg">24BDS0004</span>
+          </div>
+          <div class="cred-item assigned-item">
+            <span class="cred-label">Allotted Algorithm:</span>
+            <span class="badge-assigned-glow">&starf; Algorithm #1: Breadth First Search (BFS)</span>
+          </div>
         </div>
-        <div class="hero-stat-item">
-          <div class="hero-stat-val">181,440</div>
-          <div class="hero-stat-lbl">Solvable States</div>
+      </section>
+
+      <!-- Introduction to the 8-Puzzle Problem -->
+      <section class="panel-card home-intro-card">
+        <div class="panel-header">
+          <h3>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            Introduction to the 8-Puzzle Problem
+          </h3>
+          <span class="badge-assigned">State-Space Search Problem</span>
         </div>
-        <div class="hero-stat-item">
-          <div class="hero-stat-val" style="color: var(--indigo-400);">6</div>
-          <div class="hero-stat-lbl">AI Algorithms</div>
+        <div class="panel-body">
+          <div class="intro-grid-layout">
+            
+            <div class="intro-text-column">
+              <p class="intro-paragraph lead">
+                The <strong>8-Puzzle Problem</strong> is a classic benchmark in Artificial Intelligence for studying heuristic and state-space search strategies. It consists of a $3 \times 3$ grid with 8 numbered square tiles ($1$ through $8$) and a single empty slot (the blank tile, represented as <code>_</code> or $0$).
+              </p>
+              
+              <div class="intro-key-points">
+                <div class="key-point-item">
+                  <div class="kp-icon">&#10148;</div>
+                  <div>
+                    <strong>Objective & Goal:</strong> Transform an arbitrary <em>Initial State</em> configuration into a predefined <em>Goal State</em> by sliding adjacent tiles horizontally or vertically into the blank slot.
+                  </div>
+                </div>
+
+                <div class="key-point-item">
+                  <div class="kp-icon">&#10148;</div>
+                  <div>
+                    <strong>State Space Permutations:</strong> The $3 \times 3$ board produces $9! = 362,880$ total possible configurations. However, exactly half ($181,440$) are reachable from any given configuration due to the mathematical invariance of permutation inversions.
+                  </div>
+                </div>
+
+                <div class="key-point-item">
+                  <div class="kp-icon">&#10148;</div>
+                  <div>
+                    <strong>Mathematical Solvability Criterion:</strong> An initial state can reach the goal state if and only if both permutations possess the identical inversion parity:
+                    <div class="formula-chip">
+                      <code>Inversions(Initial) &equiv; Inversions(Goal) (mod 2)</code>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="key-point-item">
+                  <div class="kp-icon">&#10148;</div>
+                  <div>
+                    <strong>AI Search Formulations:</strong> Explored via <em>Uninformed Search</em> (BFS, DFS, DLS, IDDLS) where no domain knowledge is used, and <em>Informed Search</em> (GBFS, A*) using heuristic approximations such as Manhattan Distance and Misplaced Tiles.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Visual Preview Graphic of the 8-Puzzle -->
+            <div class="intro-visual-column">
+              <div class="puzzle-preview-card">
+                <div class="preview-card-title">Sample State Transition</div>
+                <div class="preview-boards-flow">
+                  <div class="mini-board-preview">
+                    <span class="mini-board-lbl">Initial State</span>
+                    <div class="mini-3x3-grid">
+                      <div>2</div><div>8</div><div>3</div>
+                      <div>1</div><div>6</div><div>4</div>
+                      <div>7</div><div class="blank-slot">_</div><div>5</div>
+                    </div>
+                  </div>
+                  <div class="flow-arrow">&rarr;</div>
+                  <div class="mini-board-preview goal-target">
+                    <span class="mini-board-lbl">Goal State</span>
+                    <div class="mini-3x3-grid">
+                      <div>1</div><div>2</div><div>3</div>
+                      <div>8</div><div class="blank-slot">_</div><div>4</div>
+                      <div>7</div><div>6</div><div>5</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="preview-caption">
+                  Assigned Algorithm: <strong>BFS</strong> guarantees finding the optimal path in the minimum number of moves.
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
-        <div class="hero-stat-item">
-          <div class="hero-stat-val" style="color: var(--emerald-400);">100%</div>
-          <div class="hero-stat-lbl">BFS Optimality</div>
+      </section>
+
+      <!-- Navigation Menu Feature Cards (Requirement 1: Navigation Menu) -->
+      <section class="home-nav-portal-section">
+        <div class="portal-section-header">
+          <h2>Application Navigation Menu</h2>
+          <p>Select a module below or use the top navigation menu to explore each section of the project:</p>
         </div>
-      </div>
+
+        <div class="home-portal-grid">
+          
+          <!-- Card 1: Puzzle Solver -->
+          <a href="#solver" class="portal-card" data-nav="solver">
+            <div class="portal-card-icon indigo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+            <div class="portal-card-content">
+              <h3>2. Interactive Puzzle Solver</h3>
+              <p>Configure manual 3&times;3 states or generate random solvable puzzles. Execute <strong>BFS (#1 Assigned)</strong>, DFS, DLS, IDDLS, GBFS, or A* with animated playback controls.</p>
+              <span class="portal-link-text">Launch Solver &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Card 2: Search Telemetry -->
+          <a href="#search-inspection" class="portal-card" data-nav="search-inspection">
+            <div class="portal-card-icon cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+            </div>
+            <div class="portal-card-content">
+              <h3>5. Search Process Telemetry</h3>
+              <p>Inspect real-time search metrics: nodes generated, nodes expanded, frontier (open list) queue, explored (closed list), current depth, and evaluation functions.</p>
+              <span class="portal-link-text">Inspect Search Dynamics &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Card 3: Comparison Page -->
+          <a href="#benchmark-comparison" class="portal-card" data-nav="benchmark-comparison">
+            <div class="portal-card-icon emerald">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+            </div>
+            <div class="portal-card-content">
+              <h3>7. Performance Comparison Page</h3>
+              <p>Run all six search algorithms simultaneously on the identical puzzle instance. View the formal assignment table and comparative visual efficiency charts.</p>
+              <span class="portal-link-text">View Comparison Table &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Card 4: Algorithm Information -->
+          <a href="#theoretical-foundations" class="portal-card" data-nav="theoretical-foundations">
+            <div class="portal-card-icon purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </div>
+            <div class="portal-card-content">
+              <h3>8. Algorithm Information Page</h3>
+              <p>Theoretical breakdown for each algorithm: description, working principle, advantages, limitations, time complexity, space complexity, completeness, and optimality.</p>
+              <span class="portal-link-text">Read Theoretical Docs &rarr;</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
     </div>
-  </section>
+  </div>
 
   <!-- ====================================================================
-       Main Unified Single-Page Application Dashboard
+       PAGE 2: Interactive Puzzle Solver (Requirements 2, 3, 4, 9)
        ==================================================================== -->
-  <div class="main-content-layout">
-
-    <!-- ==================================================================
-         SECTION 1: Interactive Solver & Board Visualizer
-         ================================================================== -->
-    <section id="solver" class="content-section-block">
+  <div id="page-solver" class="app-page">
+    <div class="main-content-layout">
+      
       <div class="section-headline-group">
-        <h2><span class="section-num-tag">01.</span> Interactive Solver Arena</h2>
+        <h2><span class="section-num-tag">02.</span> Interactive Puzzle Solver & Visualizer Arena</h2>
         <span class="section-tag">Interactive Simulation Stage</span>
       </div>
 
       <div class="dashboard-grid-layout">
         
-        <!-- Left Sidebar: Input & Algorithm Deck -->
+        <!-- Left Sidebar: Configuration & Algorithm Chooser -->
         <aside class="sidebar-config-col">
           
           <!-- 2. Puzzle Input Specification -->
@@ -128,7 +296,7 @@
                   <path d="M12 20h9"></path>
                   <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                 </svg>
-                Puzzle Input Configuration
+                2. Puzzle Input
               </h3>
             </div>
             <div class="panel-body">
@@ -146,8 +314,8 @@
 
               <!-- Input Methods Toggle -->
               <div class="input-tab-toggles">
-                <button type="button" class="method-btn active" id="btn-method-manual">Method 1: Manual Grid</button>
-                <button type="button" class="method-btn" id="btn-method-random">Method 2: Random Scrambler</button>
+                <button type="button" class="method-btn active" id="btn-method-manual">Method 1: User Enters</button>
+                <button type="button" class="method-btn" id="btn-method-random">Method 2: Random Solvable</button>
               </div>
 
               <!-- Manual 3x3 Inputs (Method 1) -->
@@ -184,7 +352,7 @@
                   </div>
                 </div>
                 <div style="font-size: 11.5px; color: var(--text-muted); text-align: center;">
-                  Use numbers 1-8. Blank is <code>_</code> or <code>0</code>.
+                  Enter 1-8. Blank slot is <code>_</code> or <code>0</code>.
                 </div>
               </div>
 
@@ -213,7 +381,7 @@
                   <circle cx="12" cy="12" r="3"></circle>
                   <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                 </svg>
-                AI Search Algorithm Selection
+                3. Algorithm Selection
               </h3>
             </div>
             <div class="panel-body">
@@ -225,7 +393,7 @@
                   <div class="algo-text-details">
                     <strong>
                       1. Breadth First Search (BFS)
-                      <span class="badge-assigned-glow">&starf; Allotted #1</span>
+                      <span class="badge-assigned-glow">&starf; Allotted (24BDS0004)</span>
                     </strong>
                     <small>FIFO Queue &bull; Strictly Optimal &bull; Complete</small>
                   </div>
@@ -254,7 +422,7 @@
                   <input type="radio" name="search-algo" value="iddls">
                   <div class="algo-text-details">
                     <strong>4. Iterative Deepening Search (IDDLS)</strong>
-                    <small>Linear space O(bd) with BFS optimality guarantee</small>
+                    <small>Linear space O(bd) with BFS optimality</small>
                   </div>
                 </label>
 
@@ -278,18 +446,18 @@
 
               </div>
 
-              <!-- Parameter Accordion: DLS Depth Input -->
+              <!-- DLS Depth Input -->
               <div id="dls-config-box" class="param-accordion-box" style="display: none;">
                 <label for="dls-depth-input" style="font-size: 11.5px; font-weight:700; color: var(--indigo-400); display: block; margin-bottom: 6px;">
-                  Configure Maximum Depth Limit (L):
+                  Set Depth Limit:
                 </label>
                 <input type="number" id="dls-depth-input" class="input-modern" value="8" min="1" max="25">
               </div>
 
-              <!-- Parameter Accordion: Heuristic Chooser for GBFS & A* -->
+              <!-- Heuristic Selection for GBFS & A* -->
               <div id="heuristic-config-box" class="param-accordion-box" style="display: none;">
                 <label for="heuristic-select" style="font-size: 11.5px; font-weight:700; color: var(--cyan-400); display: block; margin-bottom: 6px;">
-                  Select Admissible Heuristic Function:
+                  Provide Heuristic Selection:
                 </label>
                 <select id="heuristic-select" class="select-modern">
                   <option value="manhattan" selected>Manhattan Distance (&Sigma; |&Delta;x| + |&Delta;y|)</option>
@@ -311,7 +479,7 @@
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
                 </svg>
-                Interactive 8-Puzzle Simulation Arena
+                4. Puzzle Visualization
               </h3>
               <span id="step-action-badge" class="badge-assigned-glow" style="display: none;">Action: Initial State</span>
             </div>
@@ -327,13 +495,13 @@
                 </div>
 
                 <div class="board-station">
-                  <div class="board-station-caption" style="color: var(--cyan-400);">Active Board (Playable / Animated)</div>
+                  <div class="board-station-caption" style="color: var(--cyan-400);">Current State (Animated Movement)</div>
                   <div id="current-puzzle-board" class="puzzle-board-frame"></div>
                   <div id="step-counter-banner" class="step-counter-banner">Step 0 of 0</div>
                 </div>
 
                 <div class="board-station">
-                  <div class="board-station-caption">Target Goal State</div>
+                  <div class="board-station-caption">Goal State</div>
                   <div id="goal-puzzle-board" class="puzzle-board-frame mini"></div>
                 </div>
 
@@ -344,48 +512,48 @@
                 <div id="step-progress-fill" class="timeline-scrubber-fill"></div>
               </div>
 
-              <!-- 9. Interactive Playback Controls Dock -->
+              <!-- 9. Interactive Controls Dock -->
               <div class="floating-controls-dock">
-                <button type="button" class="ctrl-btn primary-glow" id="btn-run" title="Execute Search & Run Playback">
+                <button type="button" class="ctrl-btn primary-glow" id="btn-run" title="Run Search & Animate">
                   <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
                     <polygon points="5 3 19 12 5 21 5 3"></polygon>
                   </svg>
-                  Solve / Run
+                  Run
                 </button>
-                <button type="button" class="ctrl-btn" id="btn-pause" disabled title="Pause Animation">
+                <button type="button" class="ctrl-btn" id="btn-pause" disabled title="Pause Playback">
                   <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
                     <rect x="6" y="4" width="4" height="16"></rect>
                     <rect x="14" y="4" width="4" height="16"></rect>
                   </svg>
                   Pause
                 </button>
-                <button type="button" class="ctrl-btn" id="btn-resume" disabled title="Resume Animation">
+                <button type="button" class="ctrl-btn" id="btn-resume" disabled title="Resume Playback">
                   <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
                     <polygon points="5 3 19 12 5 21 5 3"></polygon>
                   </svg>
                   Resume
                 </button>
-                <button type="button" class="ctrl-btn" id="btn-prev" disabled title="Previous Move">
-                  &larr; Prev
+                <button type="button" class="ctrl-btn" id="btn-prev" disabled title="Previous Step">
+                  Previous Step
                 </button>
-                <button type="button" class="ctrl-btn" id="btn-next" disabled title="Next Move">
-                  Next &rarr;
+                <button type="button" class="ctrl-btn" id="btn-next" disabled title="Next Step">
+                  Next Step
                 </button>
-                <button type="button" class="ctrl-btn" id="btn-reset" disabled title="Reset to Initial State">
-                  &#8634; Reset
+                <button type="button" class="ctrl-btn" id="btn-reset" disabled title="Reset State">
+                  Reset
                 </button>
 
                 <!-- Speed Control Slider -->
                 <div class="speed-control-box">
-                  <label for="speed-slider">Speed:</label>
+                  <label for="speed-slider">Change Speed:</label>
                   <input type="range" id="speed-slider" min="0.2" max="3" step="0.2" value="1">
                   <span id="speed-label" style="font-family: var(--font-mono); color: #ffffff;">1.0x</span>
                 </div>
               </div>
 
-              <!-- Successor States Generated -->
+              <!-- Generated Successor States Strip -->
               <div class="successors-preview-strip">
-                <div class="successors-title">Generated Successor States (Valid Moves from Current Blank Position):</div>
+                <div class="successors-title">Generated Successor States (Valid Moves From Current State):</div>
                 <div id="successors-container" class="successors-cards-container"></div>
               </div>
 
@@ -394,15 +562,19 @@
 
         </main>
       </div>
-    </section>
 
-    <!-- ==================================================================
-         SECTION 2: Real-Time Search Telemetry & Tree Inspection
-         ================================================================== -->
-    <section id="search-inspection" class="content-section-block">
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       PAGE 3: Real-Time Search Process Visualization (Requirements 5, 6)
+       ==================================================================== -->
+  <div id="page-search-inspection" class="app-page">
+    <div class="main-content-layout">
+      
       <div class="section-headline-group">
-        <h2><span class="section-num-tag">02.</span> Real-Time Search Telemetry & State Inspection</h2>
-        <span class="section-tag">Search Tree Dynamics</span>
+        <h2><span class="section-num-tag">03.</span> 5. Search Process Visualization</h2>
+        <span class="section-tag">Real-Time State Telemetry</span>
       </div>
 
       <div class="panel-card">
@@ -411,7 +583,7 @@
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
             </svg>
-            5. Live Search Engine Execution Telemetry
+            Real-Time Search Telemetry HUD
           </h3>
         </div>
         <div class="panel-body">
@@ -419,15 +591,15 @@
           <!-- Key Metrics Grid -->
           <div class="metrics-telemetry-grid">
             <div class="telemetry-card highlight">
-              <div class="telemetry-title">Nodes Generated</div>
+              <div class="telemetry-title">Number of Nodes Generated</div>
               <div id="metric-nodes-gen" class="telemetry-val">0</div>
             </div>
             <div class="telemetry-card">
-              <div class="telemetry-title">Nodes Expanded</div>
+              <div class="telemetry-title">Number of Nodes Expanded</div>
               <div id="metric-nodes-exp" class="telemetry-val">0</div>
             </div>
             <div class="telemetry-card">
-              <div class="telemetry-title">Search Depth (d)</div>
+              <div class="telemetry-title">Current Search Depth</div>
               <div id="metric-depth" class="telemetry-val">0</div>
             </div>
             <div class="telemetry-card">
@@ -435,11 +607,11 @@
               <div id="metric-cost" class="telemetry-val">0</div>
             </div>
             <div class="telemetry-card">
-              <div class="telemetry-title">Heuristic h(n)</div>
+              <div class="telemetry-title">Heuristic Value h(n)</div>
               <div id="metric-h" class="telemetry-val">-</div>
             </div>
             <div class="telemetry-card">
-              <div class="telemetry-title">Evaluation f(n)</div>
+              <div class="telemetry-title">Evaluation Function f(n)</div>
               <div id="metric-f" class="telemetry-val">-</div>
             </div>
             <div class="telemetry-card">
@@ -469,7 +641,7 @@
           <div class="inspection-dual-panel">
             <div class="inspection-list-box">
               <div class="inspection-list-head">
-                <span>Frontier (Open List Queue)</span>
+                <span>Frontier (Open List)</span>
                 <span id="frontier-count-badge" class="badge-assigned-glow">0 nodes</span>
               </div>
               <div id="frontier-list-body" class="inspection-list-body">
@@ -479,7 +651,7 @@
 
             <div class="inspection-list-box">
               <div class="inspection-list-head">
-                <span>Explored (Closed List Set)</span>
+                <span>Explored (Closed List)</span>
                 <span id="explored-count-badge" class="badge-assigned-glow">0 nodes</span>
               </div>
               <div id="explored-list-body" class="inspection-list-body">
@@ -488,20 +660,24 @@
             </div>
           </div>
 
-          <!-- 6. Solution Summary Card (Revealed on Search Completion) -->
+          <!-- 6. Solution Summary Card -->
           <div id="solution-summary-card" class="solution-summary-card" style="display: none;"></div>
 
         </div>
       </div>
-    </section>
 
-    <!-- ==================================================================
-         SECTION 3: Multi-Algorithm Benchmark Comparison
-         ================================================================== -->
-    <section id="benchmark-comparison" class="content-section-block">
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       PAGE 4: Comparison Page (Requirement 7)
+       ==================================================================== -->
+  <div id="page-benchmark-comparison" class="app-page">
+    <div class="main-content-layout">
+      
       <div class="section-headline-group">
-        <h2><span class="section-num-tag">03.</span> Multi-Algorithm Performance Benchmark</h2>
-        <span class="section-tag">Comprehensive Evaluation Suite</span>
+        <h2><span class="section-num-tag">04.</span> 7. Comparison Page</h2>
+        <span class="section-tag">Performance Benchmark</span>
       </div>
 
       <div class="panel-card">
@@ -512,13 +688,13 @@
               <line x1="12" y1="20" x2="12" y2="4"></line>
               <line x1="6" y1="20" x2="6" y2="14"></line>
             </svg>
-            7. Empirical Comparison Table: All Six Algorithms on Active Puzzle
+            Comparison Table Showing the Performance of All Six Algorithms
           </h3>
           <span id="benchmark-status-badge" class="badge-assigned-glow" style="display: none;">Ready</span>
         </div>
         <div class="panel-body">
           <p style="color: var(--text-secondary); font-size: 13.5px; margin-bottom: 20px;">
-            Benchmarking all six search algorithms on the exact same puzzle instance loaded in the workspace. Evaluates solution completeness, node expansion efficiency, solution length, runtime in milliseconds ($ms$), and approximate memory consumption.
+            Comparison table showing the performance of all six algorithms on the same puzzle instance loaded in the workspace.
           </p>
 
           <div style="margin-bottom: 20px;">
@@ -526,11 +702,11 @@
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                 <polygon points="5 3 19 12 5 21 5 3"></polygon>
               </svg>
-              Run All 6 Algorithms Benchmark
+              Run All 6 Algorithms Comparison
             </button>
           </div>
 
-          <!-- Page 6 Formal Table -->
+          <!-- Page 6 Comparison Table -->
           <div class="academic-table-container">
             <table class="academic-data-table" aria-label="Search Algorithm Performance Comparison Table">
               <thead>
@@ -549,22 +725,24 @@
             </table>
           </div>
 
-          <!-- Comparative Visual Bar Charts (Nodes & Time) -->
-          <div id="benchmark-charts-container" class="benchmark-charts-grid" style="display: none;">
-            <!-- Populated dynamically by comparison.js -->
-          </div>
+          <!-- Comparative Visual Charts -->
+          <div id="benchmark-charts-container" class="benchmark-charts-grid" style="display: none;"></div>
 
         </div>
       </div>
-    </section>
 
-    <!-- ==================================================================
-         SECTION 4: Theoretical Foundations & Knowledge Base
-         ================================================================== -->
-    <section id="theoretical-foundations" class="content-section-block">
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       PAGE 5: Algorithm Information Page (Requirement 8)
+       ==================================================================== -->
+  <div id="page-theoretical-foundations" class="app-page">
+    <div class="main-content-layout">
+      
       <div class="section-headline-group">
-        <h2><span class="section-num-tag">04.</span> Theoretical Foundations & Algorithmic Encyclopedia</h2>
-        <span class="section-tag">Formal AI Documentation</span>
+        <h2><span class="section-num-tag">05.</span> 8. Algorithm Information Page</h2>
+        <span class="section-tag">Theoretical Specifications</span>
       </div>
 
       <div class="theory-articles-grid">
@@ -779,23 +957,23 @@
         </article>
 
       </div>
-    </section>
 
+    </div>
   </div>
 
   <!-- ====================================================================
-       Modern Footer
+       Modern Academic Footer
        ==================================================================== -->
   <footer class="modern-footer">
     <div class="footer-content">
       <div class="footer-brand">
-        Interactive 8-Puzzle Problem Solver &bull; Artificial Intelligence Case Study
+        Interactive 8-Puzzle Problem Solver using AI Search Algorithms
       </div>
       <div class="footer-meta">
-        Student: <strong>Tiya Agrawal</strong> &bull; Registration Number: <strong>24BDS0004</strong> &bull; Allotted: <strong>Breadth First Search (BFS #1)</strong>
+        Course: <strong>Artificial Intelligence</strong> &bull; Student: <strong>Tiya Agrawal</strong> &bull; Reg: <strong>24BDS0004</strong> &bull; Allotted: <strong>BFS (#1)</strong>
       </div>
       <div style="margin-top: 8px; font-size: 12px; color: var(--text-muted);">
-        VIT Bhopal University &bull; GitHub Pages Static Deployment Ready
+        VIT Bhopal University &bull; Individual Assignment (Case Study - 10 Marks) &bull; GitHub Pages Live Deployment Ready
       </div>
     </div>
   </footer>
