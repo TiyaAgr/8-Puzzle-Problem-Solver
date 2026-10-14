@@ -25,11 +25,23 @@ document.addEventListener('DOMContentLoaded', () => {
   window.visualizer = visualizer;
   window.comparison = comparison;
 
+  // Sound toggle button
+  const soundBtn = document.getElementById('btn-sound-toggle');
+  if (soundBtn && window.soundEngine) {
+    soundBtn.addEventListener('click', () => {
+      const isMuted = window.soundEngine.toggleMute();
+      soundBtn.style.opacity = isMuted ? '0.4' : '1';
+      soundBtn.title = isMuted ? 'Unmute Sound Effects' : 'Mute Sound Effects';
+    });
+  }
+
   // Initialize UI components
   setupNavigationTabs();
   setupPuzzleInputs();
   setupAlgorithmSelector();
   setupPresetSelector();
+
+  window.appState.updateSolvabilityDisplay = updateSolvabilityDisplay;
 
   // Initial state check and render
   updateSolvabilityDisplay();
@@ -91,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (initBoardEl) visualizer.renderBoard(initBoardEl, window.appState.initialState);
     if (goalBoardEl) visualizer.renderBoard(goalBoardEl, window.appState.goalState);
-    if (currentBoardEl) visualizer.renderBoard(currentBoardEl, window.appState.initialState, window.appState.goalState);
+    if (currentBoardEl) visualizer.renderBoard(currentBoardEl, window.appState.initialState, window.appState.goalState, true);
 
     visualizer.renderSuccessors(window.appState.initialState);
   }

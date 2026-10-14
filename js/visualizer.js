@@ -3,6 +3,7 @@
  * Interactive 8-Puzzle Problem Solver - Visualizer & Animation Controller
  * Author: Tiya Agrawal (Reg No: 24BDS0004)
  * Course: Artificial Intelligence
+ * Includes: Playback Stepper, Sound Effects, Confetti Trigger, Interactive Tile Clicking
  * ============================================================================
  */
 
@@ -12,18 +13,18 @@ class VisualizerController {
     this.currentStepIndex = 0;
     this.isPlaying = false;
     this.timer = null;
-    this.speed = 1; // 1x
-    this.baseDelay = 600; // ms per step
+    this.speed = 1.0;
+    this.baseDelay = 550; // ms
 
-    // DOM Elements cache
+    // DOM Elements
     this.boardEl = document.getElementById('current-puzzle-board');
     this.goalBoardEl = document.getElementById('goal-puzzle-board');
     this.initialBoardEl = document.getElementById('initial-puzzle-board');
     this.successorsContainer = document.getElementById('successors-container');
     
-    // Status and Step Banners
     this.stepBanner = document.getElementById('step-counter-banner');
     this.actionBanner = document.getElementById('step-action-badge');
+    this.stepProgressBar = document.getElementById('step-progress-fill');
 
     // Controls
     this.btnRun = document.getElementById('btn-run');
@@ -39,12 +40,28 @@ class VisualizerController {
   }
 
   initControls() {
-    if (this.btnRun) this.btnRun.addEventListener('click', () => this.startSolving());
-    if (this.btnPause) this.btnPause.addEventListener('click', () => this.pause());
-    if (this.btnResume) this.btnResume.addEventListener('click', () => this.resume());
-    if (this.btnNext) this.btnNext.addEventListener('click', () => this.stepForward());
-    if (this.btnPrev) this.btnPrev.addEventListener('click', () => this.stepBackward());
-    if (this.btnReset) this.btnReset.addEventListener('click', () => this.reset());
+    if (this.btnRun) this.btnRun.addEventListener('click', () => {
+      if (window.soundEngine) window.soundEngine.playClick();
+      if (this.startSolving) this.startSolving();
+    });
+    if (this.btnPause) this.btnPause.addEventListener('click', () => {
+      if (window.soundEngine) window.soundEngine.playClick();
+      this.pause();
+    });
+    if (this.btnResume) this.btnResume.addEventListener('click', () => {
+      if (window.soundEngine) window.soundEngine.playClick();
+      this.resume();
+    });
+    if (this.btnNext) this.btnNext.addEventListener('click', () => {
+      this.stepForward();
+    });
+    if (this.btnPrev) this.btnPrev.addEventListener('click', () => {
+      this.stepBackward();
+    });
+    if (this.btnReset) this.btnReset.addEventListener('click', () => {
+      if (window.soundEngine) window.soundEngine.playClick();
+      this.reset();
+    });
 
     if (this.speedSlider) {
       this.speedSlider.addEventListener('input', (e) => {
@@ -62,17 +79,22 @@ class VisualizerController {
 
   /**
    * Renders a 3x3 board onto a target DOM container.
-   * Highlights tiles that match their goal positions.
+   * If isInteractive is true, allows the user to click adjacent tiles to manually slide them!
    */
-  renderBoard(container, state, goal = null) {
+  renderBoard(container, state, goal = null, isInteractive = false) {
     if (!container) return;
     container.innerHTML = '';
+
+    const blankIdx = state.indexOf(0);
+    const blankRow = Math.floor(blankIdx / 3);
+    const blankCol = blankIdx % 3;
 
     for (let i = 0; i < 9; i++) {
       const tileVal = state[i];
       const tileDiv = document.createElement('div');
       tileDiv.className = 'tile-element';
       tileDiv.setAttribute('data-index', i);
+      tileDiv.setAttribute('data-val', tileVal);
 
       if (tileVal === 0) {
         tileDiv.classList.add('blank-tile');
@@ -82,15 +104,53 @@ class VisualizerController {
         if (goal && tileVal === goal[i]) {
           tileDiv.classList.add('correct-position');
         }
+
+        // Check if tile is movable by user
+        if (isInteractive && !this.isPlaying) {
+          const tileRow = Math.floor(i / 3);
+          const tileCol = i % 3;
+          const isAdjacent = (Math.abs(tileRow - blankRow) + Math.abs(tileCol - blankCol)) === 1;
+
+          if (isAdjacent) {
+            tileDiv.classList.add('interactive-movable');
+            tileDiv.setAttribute('title', `Click to slide tile ${tileVal}`);
+            tileDiv.addEventListener('click', () => {
+              this.handleManualTileClick(i, blankIdx);
+            });
+          }
+        }
       }
 
       container.appendChild(tileDiv);
     }
   }
 
-  /**
-   * Displays immediate successor states generated from current state.
-   */
+  handleManualTileClick(tileIdx, blankIdx) {
+    if (this.isPlaying) return;
+    const currentState = [...window.appState.initialState];
+    const tileVal = currentState[tileIdx];
+
+    // Swap
+    currentState[blankIdx] = tileVal;
+    currentState[tileIdx] = 0;
+    window.appState.initialState = currentState;
+
+    if (window.soundEngine) window.soundEngine.playSlide();
+
+    // Re-render
+    this.renderBoard(this.boardEl, currentState, window.appState.goalState, true);
+    this.renderSuccessors(currentState);
+    if (window.appState.updateSolvabilityDisplay) {
+      window.appState.updateSolvabilityDisplay();
+    }
+
+    // Check if goal reached manually
+    if (PuzzleEngine.stateToKey(currentState) === PuzzleEngine.stateToKey(window.appState.goalState)) {
+      if (window.confettiEngine) window.confettiEngine.fire();
+      if (window.soundEngine) window.soundEngine.playSuccess();
+    }
+  }
+
   renderSuccessors(state) {
     if (!this.successorsContainer) return;
     this.successorsContainer.innerHTML = '';
@@ -102,7 +162,7 @@ class VisualizerController {
 
       const label = document.createElement('div');
       label.className = 'successor-action-label';
-      label.textContent = `Action: ${succ.action}`;
+      label.textContent = succ.action;
       card.appendChild(label);
 
       const grid = document.createElement('div');
@@ -124,11 +184,7 @@ class VisualizerController {
     }
   }
 
-  /**
-   * Updates real-time search metrics and frontier/explored previews.
-   */
   updateMetricsDisplay(stepData, solutionMeta) {
-    // Basic stats
     const elNodesGen = document.getElementById('metric-nodes-gen');
     const elNodesExp = document.getElementById('metric-nodes-exp');
     const elDepth = document.getElementById('metric-depth');
@@ -145,7 +201,6 @@ class VisualizerController {
     if (elH) elH.textContent = stepData && stepData.h !== undefined ? stepData.h : '-';
     if (elF) elF.textContent = stepData && stepData.f !== undefined ? stepData.f : '-';
 
-    // Current node expanded & parent state
     const curExpMatrix = document.getElementById('current-expanded-matrix');
     if (curExpMatrix && stepData) {
       curExpMatrix.textContent = PuzzleEngine.formatMatrix(stepData.state);
@@ -155,29 +210,31 @@ class VisualizerController {
     if (parentMatrix && stepData) {
       parentMatrix.textContent = stepData.parentState 
         ? PuzzleEngine.formatMatrix(stepData.parentState)
-        : '(None - Root Node)';
+        : '(Root Node - No Parent)';
     }
 
-    // Step counter and action
     if (this.stepBanner) {
       const totalSteps = this.solution ? this.solution.path.length - 1 : 0;
       this.stepBanner.textContent = `Step ${this.currentStepIndex} of ${totalSteps}`;
     }
 
+    if (this.stepProgressBar && this.solution) {
+      const totalSteps = Math.max(1, this.solution.path.length - 1);
+      const pct = (this.currentStepIndex / totalSteps) * 100;
+      this.stepProgressBar.style.width = `${pct}%`;
+    }
+
     if (this.actionBanner) {
       if (stepData && stepData.action) {
         this.actionBanner.textContent = `Move: ${stepData.action}`;
-        this.actionBanner.style.display = 'inline-block';
+        this.actionBanner.style.display = 'inline-flex';
       } else {
         this.actionBanner.textContent = 'Initial State';
-        this.actionBanner.style.display = 'inline-block';
+        this.actionBanner.style.display = 'inline-flex';
       }
     }
   }
 
-  /**
-   * Populate frontier & explored lists preview
-   */
   updateInspectionLists(solutionMeta) {
     const frontierListEl = document.getElementById('frontier-list-body');
     const exploredListEl = document.getElementById('explored-list-body');
@@ -198,7 +255,6 @@ class VisualizerController {
       });
 
       exploredListEl.innerHTML = '';
-      // Show sample of explored states
       solutionMeta.trace.slice(-5).forEach((t) => {
         const row = document.createElement('div');
         row.className = 'inspection-item';
@@ -232,14 +288,22 @@ class VisualizerController {
     this.currentStepIndex = index;
     const stepData = this.solution.path[index];
 
-    // Render board with tile positioning
-    this.renderBoard(this.boardEl, stepData.state, this.goalState);
+    if (index > 0 && window.soundEngine) {
+      window.soundEngine.playSlide();
+    }
+
+    this.renderBoard(this.boardEl, stepData.state, this.goalState, false);
     this.renderSuccessors(stepData.state);
     this.updateMetricsDisplay(stepData, this.solution);
 
-    // Disable prev/next if at bounds
     if (this.btnPrev) this.btnPrev.disabled = (index === 0);
     if (this.btnNext) this.btnNext.disabled = (index === this.solution.path.length - 1);
+
+    // Goal reached celebration
+    if (index === this.solution.path.length - 1 && this.solution.solutionFound) {
+      if (window.confettiEngine) window.confettiEngine.fire();
+      if (window.soundEngine) window.soundEngine.playSuccess();
+    }
   }
 
   stepForward() {
@@ -267,14 +331,14 @@ class VisualizerController {
       if (!this.isPlaying) return;
       if (this.currentStepIndex < this.solution.path.length - 1) {
         this.stepForward();
-        const stepDelay = Math.max(80, this.baseDelay / this.speed);
+        const stepDelay = Math.max(60, this.baseDelay / this.speed);
         this.timer = setTimeout(tick, stepDelay);
       } else {
         this.pause();
       }
     };
 
-    const initialDelay = Math.max(80, this.baseDelay / this.speed);
+    const initialDelay = Math.max(60, this.baseDelay / this.speed);
     this.timer = setTimeout(tick, initialDelay);
   }
 
@@ -297,6 +361,8 @@ class VisualizerController {
     this.pause();
     if (this.solution && this.solution.path.length > 0) {
       this.showStep(0);
+    } else {
+      this.renderBoard(this.boardEl, window.appState.initialState, window.appState.goalState, true);
     }
   }
 
