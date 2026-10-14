@@ -168,27 +168,45 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function setupNavigationTabs() {
-    const tabButtons = document.querySelectorAll('.nav-tab-btn');
-    const tabPanels = document.querySelectorAll('.tab-content-panel');
+    const navLinks = document.querySelectorAll('.nav-anchor-link');
+    const sections = document.querySelectorAll('.content-section-block');
 
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetTab = btn.getAttribute('data-tab');
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
 
-        tabButtons.forEach(b => b.classList.remove('active'));
-        tabPanels.forEach(p => p.classList.remove('active'));
-
-        btn.classList.add('active');
-        const targetPanel = document.getElementById(`tab-panel-${targetTab}`);
-        if (targetPanel) targetPanel.classList.add('active');
-
-        window.appState.activeTab = targetTab;
-
-        // If switching to comparison, trigger auto-benchmark if table empty
-        if (targetTab === 'comparison' && !comparison.tableBody.hasChildNodes()) {
-          comparison.runAllBenchmarks();
+        if (targetSection) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
+    });
+
+    // Update active nav link on scroll
+    window.addEventListener('scroll', () => {
+      let currentSectionId = '';
+      const scrollPos = window.scrollY + 120;
+
+      sections.forEach(sec => {
+        const top = sec.offsetTop;
+        const height = sec.offsetHeight;
+        if (scrollPos >= top && scrollPos < top + height) {
+          currentSectionId = '#' + sec.id;
+        }
+      });
+
+      if (currentSectionId) {
+        navLinks.forEach(link => {
+          if (link.getAttribute('href') === currentSectionId) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
     });
   }
 
