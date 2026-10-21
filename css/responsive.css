@@ -1,0 +1,87 @@
+/* ==========================================================================
+   Responsive Adaptations for Enterprise 8-Puzzle Interface
+   ========================================================================== */
+
+@media (max-width: 1100px) {
+    .uniform-metrics-grid.full-width-metrics {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .theory-sections-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-section {
+        padding: 60px 0;
+    }
+
+    .hero-content h1 {
+        font-size: 2.1rem;
+    }
+
+    .overview-grid, .uniform-insights-grid, .heuristics-comparison-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-board {
+        width: 270px;
+        height: 270px;
+    }
+
+    .uniform-metrics-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .streamlined-player-bar {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .theory-title-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .theory-toolbar {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .theory-filter-pills {
+        overflow-x: auto;
+        max-width: 100%;
+    }
+
+    .algo-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .algo-card-badges {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
