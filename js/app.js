@@ -959,7 +959,7 @@ class App {
 
         this.dom.btnRunComparison.disabled = true;
         this.dom.comparisonProgress.style.display = 'block';
-        this.dom.comparisonProgress.textContent = 'Executing benchmark across all 6 search algorithms on active puzzle configuration...';
+        this.dom.comparisonProgress.textContent = 'Executing benchmark across all 7 search algorithms on active puzzle configuration...';
         this.dom.comparisonTableBody.innerHTML = '';
 
         const results = await ComparisonEngine.runComparison(

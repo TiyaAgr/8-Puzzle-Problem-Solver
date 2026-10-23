@@ -45,8 +45,9 @@ In a $3 \times 3$ puzzle with odd width $N = 3$:
 ---
 
 ## 4. Comparison with Other Search Paradigms
-1. **Depth-First Search (DFS):** Memory efficient ($O(bm)$), but neither complete nor optimal in cyclic graphs.
-2. **Depth-Limited Search (DLS):** Avoids infinite loops by cutting off at depth $l$, but incomplete if $d > l$.
-3. **Iterative Deepening Search (IDDLS):** Combines BFS optimality and completeness with DFS space complexity ($O(bd)$).
-4. **Greedy Best-First Search (GBFS):** Uses heuristic $f(n) = h(n)$; fast but non-optimal.
-5. **A\* Search:** Uses evaluation function $f(n) = g(n) + h(n)$; optimal and complete when heuristic is admissible.
+1. **Uniform Cost Search (UCS):** Expands the unvisited node with lowest path cost $g(n)$ via a priority queue. Optimal and complete for any non-negative step costs ($c \ge \epsilon > 0$). Identical in optimal path length to BFS on unit-cost graphs ($c=1$), but tests for goal at dequeue (expansion) rather than generation.
+2. **Depth-First Search (DFS):** Memory efficient ($O(bm)$), but neither complete nor optimal in cyclic graphs.
+3. **Depth-Limited Search (DLS):** Avoids infinite loops by cutting off at depth $l$, but incomplete if $d > l$.
+4. **Iterative Deepening Search (IDDLS):** Combines BFS optimality and completeness with DFS space complexity ($O(bd)$).
+5. **Greedy Best-First Search (GBFS):** Uses heuristic $f(n) = h(n)$; fast but non-optimal.
+6. **A\* Search:** Uses evaluation function $f(n) = g(n) + h(n)$; optimal and complete when heuristic is admissible.

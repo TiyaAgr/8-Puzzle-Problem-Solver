@@ -1,10 +1,11 @@
 /**
  * 8-Puzzle Comparison Benchmarking Module
- * Runs BFS, DFS, DLS, IDDLS, GBFS, and A* on the identical puzzle instance.
+ * Runs BFS, UCS, DFS, DLS, IDDLS, GBFS, and A* on the identical puzzle instance.
  * Compares: Solution Found, Nodes Expanded, Moves, Execution Time (ms), Memory Usage.
  */
 
 import { BFS } from './algorithms/bfs.js';
+import { UCS } from './algorithms/ucs.js';
 import { DFS } from './algorithms/dfs.js';
 import { DLS } from './algorithms/dls.js';
 import { IDDLS } from './algorithms/iddls.js';
@@ -26,6 +27,13 @@ export class ComparisonEngine {
                 fullName: 'Breadth First Search (Assigned: 24BDS0004)',
                 isAssigned: true,
                 run: () => BFS.solve(initialState, goalState, { maxNodes: 80000, recordTrace: false }),
+                memoryLevel: 'High'
+            },
+            {
+                name: 'UCS',
+                fullName: 'Uniform Cost Search (Dijkstra-based g(n))',
+                isAssigned: false,
+                run: () => UCS.solve(initialState, goalState, { maxNodes: 80000, recordTrace: false }),
                 memoryLevel: 'High'
             },
             {

@@ -1,8 +1,8 @@
 # Interactive 8-Puzzle Problem Solver using AI Search Algorithms
 
-[![GitHub Pages](https://img.shields.io/badge/Deployment-GitHub%20Pages-brightgreen)](https://username.github.io/AI-8Puzzle-Visualizer)
-[![Algorithm](https://img.shields.io/badge/Assigned%20Algorithm-BFS-blueviolet)](https://github.com)
-[![Course](https://img.shields.io/badge/Course-Artificial%20Intelligence-orange)](https://github.com)
+[![GitHub Pages](https://img.shields.io/badge/Deployment-GitHub%20Pages-brightgreen)](https://tiyaagr.github.io/8-Puzzle-Problem-Solver/)
+[![Algorithm](https://img.shields.io/badge/Assigned%20Algorithm-BFS-blueviolet)](https://github.com/TiyaAgr/8-Puzzle-Problem-Solver)
+[![Course](https://img.shields.io/badge/Course-Artificial%20Intelligence-orange)](https://github.com/TiyaAgr/8-Puzzle-Problem-Solver)
 
 An interactive, responsive state-space search web application designed to solve and visualize the classic **8-Puzzle Problem** using uninformed and informed Artificial Intelligence search algorithms.
 
@@ -19,8 +19,8 @@ Developed as a Digital Assignment (Case Study) for the **Artificial Intelligence
 ---
 
 ## 🚀 Live Demo & Repository
-- **GitHub Pages Live URL:** `https://username.github.io/AI-8Puzzle-Visualizer` *(Replace `username` with your GitHub username upon pushing)*
-- **GitHub Repository URL:** `https://github.com/username/AI-8Puzzle-Visualizer`
+- **GitHub Pages Live URL:** `https://tiyaagr.github.io/8-Puzzle-Problem-Solver/`
+- **GitHub Repository URL:** `https://github.com/TiyaAgr/8-Puzzle-Problem-Solver`
 
 ---
 
@@ -32,7 +32,7 @@ This application provides:
 2. **Animation Engine:** Smooth sliding transitions of the blank tile with interactive playback controls (Run, Pause, Resume, Next Step, Prev Step, Reset, and Speed Slider).
 3. **Solvability Validation:** Automatic mathematical inversion count check to guarantee whether the puzzle is solvable before initiating search.
 4. **Assigned Algorithm Highlight (BFS):** Deeply instrumented FIFO queue search demonstrating optimality and complete level-by-level traversal.
-5. **Algorithm Comparison Engine:** 1-click benchmarking across all 6 algorithms on the identical board instance.
+5. **Algorithm Comparison Engine:** 1-click benchmarking across all 7 algorithms on the identical board instance.
 
 ---
 
@@ -49,11 +49,12 @@ This application provides:
 | # | Algorithm | Type | Strategy | Time Complexity | Space Complexity | Complete? | Optimal? |
 |---|-----------|------|----------|-----------------|------------------|-----------|----------|
 | **1** | **BFS (Assigned: 24BDS0004)** | Uninformed | FIFO Queue (shallowest node) | $O(b^d)$ | $O(b^d)$ | **Yes** | **Yes** ($c=1$) |
-| **2** | **DFS** | Uninformed | LIFO Stack (deepest node) | $O(b^m)$ | $O(bm)$ | Finite Only | No |
-| **3** | **DLS** | Uninformed | DFS with cutoff depth limit $l$ | $O(b^l)$ | $O(bl)$ | If $d \le l$ | No |
-| **4** | **IDDLS** | Uninformed | Iterative DFS with depth $0, 1, 2...$ | $O(b^d)$ | $O(bd)$ | **Yes** | **Yes** ($c=1$) |
-| **5** | **GBFS** | Informed | Priority Queue with $f(n) = h(n)$ | $O(b^m)$ | $O(b^m)$ | Yes (Graph) | No |
-| **6** | **A\*** | Informed | Priority Queue with $f(n) = g(n) + h(n)$ | $O(b^d)$ | $O(b^d)$ | **Yes** | **Yes** |
+| **2** | **UCS** | Uninformed | Min-Priority Queue ($g(n)$) | $O(b^{1 + \lfloor C^*/\epsilon \rfloor})$ | $O(b^{1 + \lfloor C^*/\epsilon \rfloor})$ | **Yes** | **Yes** |
+| **3** | **DFS** | Uninformed | LIFO Stack (deepest node) | $O(b^m)$ | $O(bm)$ | Finite Only | No |
+| **4** | **DLS** | Uninformed | DFS with cutoff depth limit $l$ | $O(b^l)$ | $O(bl)$ | If $d \le l$ | No |
+| **5** | **IDDLS** | Uninformed | Iterative DFS with depth $0, 1, 2...$ | $O(b^d)$ | $O(bd)$ | **Yes** | **Yes** ($c=1$) |
+| **6** | **GBFS** | Informed | Priority Queue with $f(n) = h(n)$ | $O(b^m)$ | $O(b^m)$ | Yes (Graph) | No |
+| **7** | **A\*** | Informed | Priority Queue with $f(n) = g(n) + h(n)$ | $O(b^d)$ | $O(b^d)$ | **Yes** | **Yes** |
 
 ---
 
@@ -106,6 +107,7 @@ AI-8Puzzle-Visualizer/
 │   ├── app.js              # Application controller and UI event binding
 │   └── algorithms/
 │       ├── bfs.js          # Breadth-First Search (Assigned: 24BDS0004)
+│       ├── ucs.js          # Uniform Cost Search (Lowest-cost first)
 │       ├── dfs.js          # Depth-First Search
 │       ├── dls.js          # Depth-Limited Search
 │       ├── iddls.js        # Iterative Deepening Search

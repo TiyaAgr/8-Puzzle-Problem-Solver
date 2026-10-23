@@ -380,7 +380,7 @@
                 <span class="section-label">Empirical Benchmarks &bull; Performance Analysis</span>
                 <h2 class="section-title">Algorithm Performance Comparison</h2>
                 <p class="section-subtitle">
-                    Evaluation of all six AI search strategies under identical initial and target goal configurations. Demonstrates execution time, node expansion efficiency, solution optimality, and space complexity.
+                    Evaluation of all seven AI search strategies under identical initial and target goal configurations. Demonstrates execution time, node expansion efficiency, solution optimality, and space complexity.
                 </p>
             </div>
 
@@ -389,7 +389,7 @@
                     <div>
                         <span class="panel-title">Benchmark Suite Execution</span>
                         <div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 2px;">
-                            Runs BFS, DFS, DLS, IDDLS, GBFS, and A* on the active board configuration.
+                            Runs BFS, UCS, DFS, DLS, IDDLS, GBFS, and A* on the active board configuration.
                         </div>
                     </div>
                     <button id="btn-run-comparison" class="btn btn-primary">
@@ -424,7 +424,7 @@
                         <tbody id="comparison-table-body">
                             <tr>
                                 <td colspan="6" style="text-align: center; color: var(--text-dim); padding: 40px 20px;">
-                                    Click <strong>"Run All Algorithms Benchmark"</strong> to evaluate BFS, DFS, DLS, IDDLS, GBFS, and A* on the active puzzle.
+                                    Click <strong>"Run All Algorithms Benchmark"</strong> to evaluate BFS, UCS, DFS, DLS, IDDLS, GBFS, and A* on the active puzzle.
                                 </td>
                             </tr>
                         </tbody>
@@ -438,6 +438,13 @@
                     <h4>Assigned BFS Optimality</h4>
                     <p>
                         BFS is guaranteed to find the shortest move sequence because all step costs are uniform (c = 1). Its trade-off is high memory consumption: every node on the frontier must remain in memory until visited.
+                    </p>
+                </div>
+
+                <div class="uniform-insight-box">
+                    <h4>BFS vs. Uniform Cost Search (UCS)</h4>
+                    <p>
+                        Both BFS and UCS guarantee shortest/lowest-cost paths for unit costs ($c = 1$). While BFS operates via a FIFO queue testing the goal on generation, UCS prioritizes nodes strictly by cumulative path cost $g(n)$ and defers the goal test until dequeue (expansion)—ensuring optimality even with variable step costs.
                     </p>
                 </div>
 
@@ -471,7 +478,7 @@
                     <h2 class="section-title">Search Algorithm Specifications</h2>
                     <div class="theory-toolbar">
                         <div class="theory-filter-pills">
-                            <button class="theory-filter-btn active" data-filter="all" type="button">All (7)</button>
+                            <button class="theory-filter-btn active" data-filter="all" type="button">All (8)</button>
                             <button class="theory-filter-btn" data-filter="assigned" type="button">Assigned: BFS</button>
                             <button class="theory-filter-btn" data-filter="uninformed" type="button">Uninformed</button>
                             <button class="theory-filter-btn" data-filter="informed" type="button">Informed</button>
@@ -579,12 +586,110 @@
                     </div>
                 </article>
 
-                <!-- 2. DFS -->
+                <!-- 2. Uniform Cost Search (UCS) -->
+                <article class="theory-algorithm-card" data-category="uninformed">
+                    <div class="algo-card-header" role="button" tabindex="0" aria-expanded="false">
+                        <div>
+                            <span class="section-label">Uninformed Search &bull; Lowest Path Cost</span>
+                            <h3>2. Uniform Cost Search (UCS)</h3>
+                        </div>
+                        <div class="algo-card-badges">
+                            <span class="status-badge badge-solvable">Optimal</span>
+                            <span class="status-badge badge-solvable">Complete</span>
+                            <span class="status-badge badge-assigned">Priority Queue: g(n)</span>
+                            <span class="accordion-chevron" aria-hidden="true">&#9662;</span>
+                        </div>
+                    </div>
+
+                    <div class="theory-card-body">
+                        <div class="theory-sections-grid">
+                            <div class="theory-text-block">
+                                <div>
+                                    <h4 class="theory-subheading">Description & Concept</h4>
+                                    <p class="theory-paragraph">
+                                        Uniform Cost Search is an uninformed graph search algorithm that expands nodes in order of their cumulative path cost from the root: <code>g(n)</code>. While BFS expands the shallowest node (hop count), UCS expands the cheapest node in terms of total accumulated path cost. It functions as Dijkstra's algorithm formulated for state-space search trees and graphs. In an 8-puzzle with unit step costs (<em>c = 1</em>), cumulative cost is identical to depth ($g(n) = \text{depth}(n)$), but UCS remains fundamentally cost-driven and applies its goal test upon node expansion.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h4 class="theory-subheading">Working Principle (Step-by-Step)</h4>
+                                    <ol class="theory-steps-list">
+                                        <li>Insert the initial board state into a Min-Priority Queue with path cost <code>g(root) = 0</code>.</li>
+                                        <li>Remove the node <em>n</em> with the minimal path cost <code>g(n)</code> from the priority queue.</li>
+                                        <li><strong>Goal Verification on Dequeue:</strong> Check if <em>n</em> is the goal state. Testing for the goal only upon extraction (expansion) is the theoretical condition guaranteeing optimal solution paths.</li>
+                                        <li>Add node <em>n</em> to the explored set (closed list) so that duplicate or higher-cost paths are discarded.</li>
+                                        <li>Generate valid sliding movements (Up, Down, Left, Right) to produce child successors.</li>
+                                        <li>For each successor <em>n'</em>, compute cumulative step cost: <code>g(n') = g(n) + c(n, a, n')</code>. If <em>n'</em> is neither explored nor in the frontier—or if a lower cost to reach <em>n'</em> is found—insert or update <em>n'</em> in the priority queue.</li>
+                                        <li>Repeat until the goal node is dequeued or the priority queue becomes empty.</li>
+                                    </ol>
+                                </div>
+
+                                <div>
+                                    <h4 class="theory-subheading">Advantages & Strengths</h4>
+                                    <ul class="theory-steps-list">
+                                        <li><strong>Universal Cost Optimality:</strong> Guaranteed to discover the least-cost path for any non-negative step costs where $c(s, a, s') \ge \epsilon > 0$.</li>
+                                        <li><strong>Foundation for A*:</strong> UCS is equivalent to A* search with a zero heuristic ($h(n) = 0, f(n) = g(n)$).</li>
+                                        <li><strong>Systematic Expansion:</strong> Expands state space contours in strictly increasing order of cumulative cost $g(n)$.</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h4 class="theory-subheading">Limitations & Comparison with BFS</h4>
+                                    <p class="theory-paragraph">
+                                        <strong>Memory Overhead:</strong> Retains all active frontier nodes in a min-priority queue, requiring exponential space $O(b^{1 + \lfloor C^* / \epsilon \rfloor})$.<br>
+                                        <strong>Goal Test Timing vs. BFS:</strong> Standard BFS tests for the goal at node <em>generation</em> (saving one level of expansions for unit costs), whereas UCS must defer goal testing until node <em>expansion</em> to safeguard optimality when step costs vary.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Technical Specifications Table -->
+                            <div>
+                                <h4 class="theory-subheading" style="margin-bottom: 8px;">Theoretical Properties</h4>
+                                <table class="theory-specs-table">
+                                    <tr>
+                                        <td>Data Structure</td>
+                                        <td>Min-Priority Queue</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Evaluation Function</td>
+                                        <td>f(n) = g(n)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Time Complexity</td>
+                                        <td>O(b^(1 + &lfloor;C* / &epsilon;&rfloor;)) &approx; O(b^d)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Space Complexity</td>
+                                        <td>O(b^(1 + &lfloor;C* / &epsilon;&rfloor;)) &approx; O(b^d)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Completeness</td>
+                                        <td>Complete (for &epsilon; &gt; 0)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Optimality</td>
+                                        <td>Optimal (any cost c &ge; &epsilon;)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Step Cost Model</td>
+                                        <td>General non-negative c</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Goal Test Timing</td>
+                                        <td>On Node Expansion (Dequeue)</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 3. DFS -->
                 <article class="theory-algorithm-card" data-category="uninformed">
                     <div class="algo-card-header" role="button" tabindex="0" aria-expanded="false">
                         <div>
                             <span class="section-label">Uninformed Search</span>
-                            <h3>2. Depth-First Search (DFS)</h3>
+                            <h3>3. Depth-First Search (DFS)</h3>
                         </div>
                         <div class="algo-card-badges">
                             <span class="status-badge badge-neutral">Linear Space</span>
@@ -651,12 +756,12 @@
                     </div>
                 </article>
 
-                <!-- 3. DLS -->
+                <!-- 4. DLS -->
                 <article class="theory-algorithm-card" data-category="uninformed">
                     <div class="algo-card-header" role="button" tabindex="0" aria-expanded="false">
                         <div>
                             <span class="section-label">Bounded Search</span>
-                            <h3>3. Depth-Limited Search (DLS)</h3>
+                            <h3>4. Depth-Limited Search (DLS)</h3>
                         </div>
                         <div class="algo-card-badges">
                             <span class="status-badge badge-neutral">Bounded Limit l</span>
@@ -723,12 +828,12 @@
                     </div>
                 </article>
 
-                <!-- 4. IDDLS -->
+                <!-- 5. IDDLS -->
                 <article class="theory-algorithm-card" data-category="uninformed">
                     <div class="algo-card-header" role="button" tabindex="0" aria-expanded="false">
                         <div>
                             <span class="section-label">Iterative Uninformed Search</span>
-                            <h3>4. Iterative Deepening Search (IDDLS)</h3>
+                            <h3>5. Iterative Deepening Search (IDDLS)</h3>
                         </div>
                         <div class="algo-card-badges">
                             <span class="status-badge badge-solvable">Optimal</span>
@@ -790,12 +895,12 @@
                     </div>
                 </article>
 
-                <!-- 5. GBFS -->
+                <!-- 6. GBFS -->
                 <article class="theory-algorithm-card" data-category="informed">
                     <div class="algo-card-header" role="button" tabindex="0" aria-expanded="false">
                         <div>
                             <span class="section-label">Informed Heuristic Search</span>
-                            <h3>5. Greedy Best-First Search (GBFS)</h3>
+                            <h3>6. Greedy Best-First Search (GBFS)</h3>
                         </div>
                         <div class="algo-card-badges">
                             <span class="status-badge badge-neutral">Fast Exploration</span>
@@ -866,12 +971,12 @@
                     </div>
                 </article>
 
-                <!-- 6. A* Search -->
+                <!-- 7. A* Search -->
                 <article class="theory-algorithm-card" data-category="informed">
                     <div class="algo-card-header" role="button" tabindex="0" aria-expanded="false">
                         <div>
                             <span class="section-label">Optimal Informed Search</span>
-                            <h3>6. A* Search</h3>
+                            <h3>7. A* Search</h3>
                         </div>
                         <div class="algo-card-badges">
                             <span class="status-badge badge-solvable">Optimal</span>
