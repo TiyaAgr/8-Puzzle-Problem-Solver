@@ -560,7 +560,8 @@ body {
 /* Full-Width Telemetry & Visualizer Layout */
 .solver-metrics-card {
     width: 100%;
-    margin-bottom: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
     box-sizing: border-box;
 }
 
@@ -589,6 +590,7 @@ body {
     width: 100%;
     box-sizing: border-box;
     margin-top: 0;
+    margin-bottom: 24px;
 }
 
 /* Search Tree Visualizer Canvas with Nodes and Connecting Lines */
