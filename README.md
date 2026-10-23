@@ -6,11 +6,9 @@
 
 An interactive, responsive state-space search web application designed to solve and visualize the classic **8-Puzzle Problem** using uninformed and informed Artificial Intelligence search algorithms.
 
-Developed as a Digital Assignment (Case Study) for the **Artificial Intelligence** course.
-
 ---
 
-## 👨‍🎓 Student Details
+## Student Details
 - **Registration Number:** `24BDS0004`
 - **Assigned Algorithm:** **Algorithm 1 — Breadth-First Search (BFS)**
 - **Course Name:** Artificial Intelligence
@@ -18,13 +16,13 @@ Developed as a Digital Assignment (Case Study) for the **Artificial Intelligence
 
 ---
 
-## 🚀 Live Demo & Repository
+## Live Demo & Repository
 - **GitHub Pages Live URL:** `https://tiyaagr.github.io/8-Puzzle-Problem-Solver/`
 - **GitHub Repository URL:** `https://github.com/TiyaAgr/8-Puzzle-Problem-Solver`
 
 ---
 
-## 📌 Project Overview
+## Project Overview
 The **8-Puzzle** is a classic state-space search benchmark in AI consisting of a $3 \times 3$ grid with 8 numbered tiles and one blank space (`0`). The agent must move the blank space to transition the board from an initial configuration to a target goal state.
 
 This application provides:
@@ -36,7 +34,7 @@ This application provides:
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 - **Markup & Semantics:** HTML5
 - **Styling & Layout:** CSS3 (Vanilla CSS with custom design system, Glassmorphism, CSS Grid & Flexbox)
 - **Programming Language:** JavaScript (ES6+ Modules, Object-Oriented design)
@@ -44,7 +42,7 @@ This application provides:
 
 ---
 
-## 🧠 Search Algorithms Implemented
+## Search Algorithms Implemented
 
 | # | Algorithm | Type | Strategy | Time Complexity | Space Complexity | Complete? | Optimal? |
 |---|-----------|------|----------|-----------------|------------------|-----------|----------|
@@ -58,7 +56,7 @@ This application provides:
 
 ---
 
-## 📐 Heuristics Implemented (for GBFS & A*)
+## Heuristics Implemented (for GBFS & A*)
 
 1. **Misplaced Tiles ($h_1$):**
    - Counts the number of tiles that are not in their target goal position (ignoring blank tile 0).
@@ -71,7 +69,7 @@ This application provides:
 
 ---
 
-## 🧮 Solvability Theorem & Inversion Count
+## Solvability Theorem & Inversion Count
 In a $3 \times 3$ grid, an inversion is defined as any pair of tiles $(A, B)$ such that $A > B$ and $A$ appears before $B$ (disregarding 0).
 
 An initial state can reach a goal state **if and only if** both states share identical parity:
@@ -82,18 +80,18 @@ If one has an even number of inversions and the other has an odd number, the puz
 
 ---
 
-## 🎮 Interactive Controls
-- **Run (▶):** Starts automated playback of the solution or search trace.
-- **Pause (⏸):** Pauses execution at current step.
-- **Resume (▶):** Continues playback from current paused state.
-- **Next Step (⏭) / Previous Step (⏮):** Step forward or backward one move at a time.
-- **Reset (🔄):** Reverts board to the initial starting state.
+## Interactive Controls
+- **Run:** Starts automated playback of the solution or search trace.
+- **Pause:** Pauses execution at current step.
+- **Resume:** Continues playback from current paused state.
+- **Next Step / Previous Step:** Step forward or backward one move at a time.
+- **Reset:** Reverts board to the initial starting state.
 - **Speed Slider:** Adjust playback speed continuously from $0.5\times$ to $5.0\times$.
 - **Interactive Manual Play:** Click any tile adjacent to the blank space to slide it manually.
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 ```
 AI-8Puzzle-Visualizer/
 │── index.html              # Main application web page
@@ -123,46 +121,7 @@ AI-8Puzzle-Visualizer/
 
 ---
 
-## 💻 How to Run the Project Locally
-
-No dependencies or npm installs required! The project uses pure standard ES6 modules:
-
-### Method 1: Using VS Code Live Server
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/username/AI-8Puzzle-Visualizer.git
-   cd AI-8Puzzle-Visualizer
-   ```
-2. Open with VS Code:
-   ```bash
-   code .
-   ```
-3. Right-click `index.html` and click **"Open with Live Server"**.
-
-### Method 2: Using Python HTTP Server
-Run any local server in the project directory:
-```bash
-python -m http.server 8000
-```
-Open your browser and visit: `http://localhost:8000`
-
----
-
-## 🌐 How to Deploy to GitHub Pages
-1. Push your repository to GitHub:
-   ```bash
-   git add .
-   git commit -m "Complete 8-Puzzle Visualizer for 24BDS0004"
-   git push origin main
-   ```
-2. On GitHub, navigate to **Settings** > **Pages**.
-3. Under **Build and deployment** > **Branch**, select `main` branch and `/ (root)` folder.
-4. Click **Save**. Within 1–2 minutes, your live site will be deployed at:
-   `https://<username>.github.io/<repo-name>/`
-
----
-
-## 📚 References
+## References
 1. Russell, S., & Norvig, P. (2020). *Artificial Intelligence: A Modern Approach (4th Edition)*. Pearson. Chapter 3: Solving Problems by Searching.
 2. Korf, R. E. (1985). *Depth-first iterative-deepening: An optimal admissible tree search*. Artificial Intelligence, 27(1), 97-109.
 3. Reinefeld, A. (1993). *Complete Solution of the Eight-Puzzle and the Benefit of Node Ordering in IDA\**. IJCAI.
